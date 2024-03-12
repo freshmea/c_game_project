@@ -162,22 +162,6 @@ char o_block[4][4][4] =
  * 움직이고 놓이는 공간이됨*/
 char tetris_table[21][10];
 
-/* 게임 종료때 마다
- * 이름과 득점점수와
- * 날짜, 시간이저장되는 구조체
- * */
-static struct result
-{
-	char name[30];
-	long point;
-	int year;
-	int month;
-	int day;
-	int hour;
-	int min;
-	int rank;
-} temp_result;
-
 int block_number = 0;	   /*현재 블록 넘버 변수*/
 int next_block_number = 0; /*다음 블록 넘버 변수 */
 int block_state = 0;	   /*블록 상태, 회전함에 따라 변한다*/
@@ -198,5 +182,6 @@ int check_one_line(void);		/* 한줄이 완성되었는지 확인하는 함수. 
 int print_result(void);			/* 메뉴에서 기록출력시 호출되어 기록을 출력하는 함수*/
 int search_result(void);		/*메뉴에서 기록검색시 호출되어 기러고을 검색하는 함수*/
 int getch(void);				/*문자를 바로 입력 받을 수 있는 함수*/
+int save_result(long, int);		/*게임종료시 호출되어 기록을 저장하는 함수*/
 
 #endif // TETRISV01_H

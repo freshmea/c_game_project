@@ -35,9 +35,6 @@ int game_start(void)
 {
 	static struct sigaction sa;
 	static struct itimerval timer;
-	time_t ptime;
-	struct tm *t;
-	FILE *fp = NULL;
 
 	if (game == GAME_START)
 	{
@@ -45,7 +42,7 @@ int game_start(void)
 
 		/* Install timer_handler as the signal handler for SIGVTALRM. */
 		memset(&sa, 0, sizeof(sa));
-		sa.sa_handler = refresh;
+		sa.sa_handler = (void (*)(int))refresh;
 		sigaction(SIGVTALRM, &sa, NULL);
 
 		/* Configure the timer to expire after 250 msec... */
@@ -72,29 +69,7 @@ int game_start(void)
 				timer.it_interval.tv_usec = 0;
 				setitimer(ITIMER_VIRTUAL, &timer, NULL);
 
-				// 기록 파일로 저장
-
-				printf("\n\n Final score : %ld ", point);
-				printf("\n\n Please enter your name : ");
-				scanf("%s%*c", temp_result.name);
-				temp_result.point = point;
-
-				if (temp_result.point >= best_point)
-					best_point = temp_result.point;
-
-				ptime = time(NULL);	   // 현재 시각을 초 단위로 얻기
-				t = localtime(&ptime); // 초 단위의 시간을 분리하여 구조체에 넣기
-
-				temp_result.year = t->tm_year + 1900;
-				temp_result.month = t->tm_mon + 1;
-				temp_result.day = t->tm_mday;
-				temp_result.hour = t->tm_hour;
-				temp_result.min = t->tm_min;
-
-				fp = fopen("result", "ab");
-				fseek(fp, 1, SEEK_END);
-				fwrite(&temp_result, sizeof(struct result), 1, fp);
-				fclose(fp);
+				save_result(point, best_point);
 
 				x = 3, y = 0;
 				point = 0;
@@ -196,7 +171,7 @@ int init_tetris_table(void)
 }
 
 /* 타이머에 콜백함수로 등록되어 계속 새로고침 하면서 호출되는 함수. 키입력 확인,  화면새로고침, 한줄완성검사등의 계속 상태가 변함을 확인해야 되는 함수를 호출한다 */
-void refresh(int signum)
+int refresh(int signum)
 {
 	static int downcount = 0;
 	static int setcount = 0;
@@ -303,6 +278,7 @@ void refresh(int signum)
 	default:
 		break;
 	}
+	return 0;
 }
 
 /*이동, 회전키가 입력되면, 충돌검사후 이동시킨다*/
@@ -523,102 +499,5 @@ int check_one_line(void)
 		}
 	}
 
-	return 0;
-}
-
-/*메뉴에서 기록검색시 호출되어 기러고을 검색하는 함수*/
-int search_result(void)
-{
-	FILE *fp = NULL;
-	char name[30];
-	char ch;
-	int find = 0;
-
-	fp = fopen("result", "rb");
-
-	if (fp == NULL)
-		return 0;
-
-	system("clear");
-
-	printf("\n\n\t\tEnter the name your to search.  : ");
-	scanf("%s%*c", name);
-
-	printf("\n\t\t\t\tText Tetris");
-	printf("\n\t\t\t\t Game Stats\n\n");
-	printf("\n\t\tName\t\tScore\t   Date\t\t Time");
-
-	while (1)
-	{
-		fread(&temp_result, sizeof(struct result), 1, fp);
-		if (!feof(fp))
-		{
-			if (!strcmp(temp_result.name, name))
-			{
-				find = 1;
-				printf("\n\t========================================================");
-				printf("\n\t\t%s\n\t\t\t\t%ld\t%d.%d.%d.  |  %d:%d\n", temp_result.name, temp_result.point, temp_result.year, temp_result.month, temp_result.day, temp_result.hour, temp_result.min);
-			}
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	if (find == 0)
-		printf("\n\n\n\t\tThis name is not found.");
-
-	printf("\n\n\n\t\tBack to the game menu : M");
-	while (1)
-	{
-		ch = getch();
-		if (ch == 77 || ch == 109)
-			break;
-	}
-
-	return 0;
-}
-
-/* 메뉴에서 기록출력시 호출되어 기록을 출력하는 함수*/
-int print_result(void)
-{
-	FILE *fp = NULL;
-	char ch = 1;
-
-	fp = fopen("result", "rb");
-
-	if (fp == NULL)
-		return 0;
-
-	system("clear");
-
-	printf("\n\t\t\t\tText Tetris");
-	printf("\n\t\t\t\t Game Stats\n\n");
-	printf("\n\t\tName\t\tScore\t   Date\t\t Time");
-
-	while (1)
-	{
-		fread(&temp_result, sizeof(struct result), 1, fp);
-		if (!feof(fp))
-		{
-			printf("\n\t========================================================");
-			printf("\n\t\t%s\n\t\t\t\t%ld\t %d.%d.%d.  |  %d:%d\n", temp_result.name, temp_result.point, temp_result.year, temp_result.month, temp_result.day, temp_result.hour, temp_result.min);
-		}
-		else
-		{
-			break;
-		}
-	}
-
-	fclose(fp);
-
-	printf("\n\n\tBack to the game menu : M");
-	while (1)
-	{
-		ch = getch();
-		if (ch == 77 || ch == 109)
-			break;
-	}
 	return 0;
 }
