@@ -1,3 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(TetrisV01)
-add_executable(TetrisV01 src/tetrisV01.c)
+project(tetrisV01)
+
+add_executable(tetrisV01 src/tetrisV01.c src/display_menu.c src/getch.c)
+target_include_directories(tetrisV01 PUBLIC include)
