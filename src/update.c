@@ -1,8 +1,6 @@
 #include "update.h"
 
-/** 타이머에 콜백함수로 등록되어 계속 새로고침 하면서 호출되는 함수.
-/* 키입력 확인,  화면새로고침, 한줄완성검사등의 계속 상태가 변함을 확인해야 되는 함수를 호출한다 */
-
+/* 타이머에 콜백함수로 등록되어 계속 새로고침 하면서 호출되는 함수. 키입력 확인,  화면새로고침, 한줄완성검사등의 계속 상태가 변함을 확인해야 되는 함수를 호출한다 */
 int update(int signum)
 {
     static int downcount = 0;
@@ -21,9 +19,13 @@ int update(int signum)
         if (firststart == 0)
             firststart++;
     }
-    display_tetris_table(countrange);
 
+    printf("\n Score: %ld | Speed: %d | hihgest score: %d", point, countrange, best_point);
+
+    display_tetris_table();
     check_one_line();
+
+    printf("\n GAME STOP : P");
 
     if (downcount == countrange - 1)
     {
@@ -326,27 +328,6 @@ int check_one_line(void)
             }
         }
     }
-
-    return 0;
-}
-
-/*테트리스판을 초기화 한다. 벽과 공간을 나눔*/
-int init_tetris_table(void)
-{
-    int i = 0, j = 0;
-
-    for (i = 0; i < 20; i++)
-        for (j = 1; j < 9; j++)
-            tetris_table[i][j] = 0;
-
-    for (i = 0; i < 21; i++)
-    {
-        tetris_table[i][0] = 1;
-        tetris_table[i][9] = 1;
-    }
-
-    for (j = 1; j < 9; j++)
-        tetris_table[20][j] = 1;
 
     return 0;
 }
