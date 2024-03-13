@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
 enum BlockType
 {
     I_BLOCK,
@@ -18,6 +19,7 @@ enum BlockType
 int display_tetris_table(int *);
 
 // 외부 참조 변수
+// update.h
 extern char i_block[4][4][4];
 extern char t_block[4][4][4];
 extern char s_block[4][4][4];
@@ -26,6 +28,7 @@ extern char l_block[4][4][4];
 extern char j_block[4][4][4];
 extern char o_block[4][4][4];
 extern int next_block_number;
+// tetrisV01.h
 extern long point;
 extern int best_point;
 extern char tetris_table[21][10];

@@ -42,7 +42,7 @@ int display_tetris_table(int *countrange)
         for (j = 0; j < 4; j++)
         {
             if ((*block_pointer)[0][i][j] == 1)
-                printf("#");
+                printf("■");
             else if ((*block_pointer)[0][i][j] == 0)
                 printf(" ");
         }
@@ -55,10 +55,10 @@ int display_tetris_table(int *countrange)
         {
             if (j == 0 || j == 9 || (i == 20 && (j > 1 || j < 9)))
             {
-                printf("@");
+                printf("■");
             }
             else if (tetris_table[i][j] == 1)
-                printf("#");
+                printf("■");
             else if (tetris_table[i][j] == 0)
                 printf(" ");
         }

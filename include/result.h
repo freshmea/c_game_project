@@ -6,7 +6,6 @@
 #include <time.h>
 #include <string.h>
 
-int getch(void); /*문자를 바로 입력 받을 수 있는 함수*/
 
 /** 게임 종료때 마다
  * 이름과 득점점수와
@@ -29,4 +28,7 @@ int print_result(void);     /* 메뉴에서 기록출력시 호출되어 기록�
 int search_result(void);    /*메뉴에서 기록검색시 호출되어 기러고을 검색하는 함수*/
 int save_result(long, int); /*게임종료시 호출되어 기록을 저장하는 함수*/
 
+// 외부 함수 선언
+// getch.c
+int getch(void); /*문자를 바로 입력 받을 수 있는 함수*/
 #endif // RESULT_H
