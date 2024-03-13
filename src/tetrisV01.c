@@ -41,7 +41,7 @@ int game_start(void)
 		// 타이머 설정
 		static struct itimerval timer;
 		//  type 에러가 나면 오른쪽 사용. signal(SIGALRM, (void (*)(int))update);
-		signal(SIGVTALRM, update);
+		signal(SIGVTALRM, (void (*)(int))update);
 		timer.it_value.tv_sec = 0;
 		timer.it_value.tv_usec = 1;
 		timer.it_interval.tv_sec = 0;

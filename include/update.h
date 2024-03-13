@@ -44,4 +44,10 @@ extern int game;                  /*게임 상태 변수, 게임이 시작되거
 extern int best_point;            /* 게임 최고 점수를 알려주는 변수*/
 extern long point;                /* 현재 게임중 득점을 알려주는 변수 */
 
-#endif // UPDATE_H
+int display_tetris_table(void); /* 현재의 테트리스판을 보여준다. 블록이 놓이고 쌓인 현재 상태를 보여줌*/
+int move_block(int);            /*이동, 회전키가 입력되면, 충돌검사후 이동시킨다*/
+int drop(void);                 /* 충돌되기 전까지 블록을 다운시킨다.*/
+int collision_test(int);        /* 블록이 이동, 회전하기 전에 충돌되는 블록이나 벽이 없는지 확인하는 함수*/
+int check_one_line(void);       /* 한줄이 완성되었는지 확인하는 함수. 완성되면 한줄을 지우고, 점수에 1000점을 더한다*/
+int getch(void);                /*문자를 바로 입력 받을 수 있는 함수*/
+#endif                          // UPDATE_H
