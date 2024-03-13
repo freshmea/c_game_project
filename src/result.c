@@ -1,25 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#include <string.h>
-
-int getch(void); /*문자를 바로 입력 받을 수 있는 함수*/
-
-/* 게임 종료때 마다
- * 이름과 득점점수와
- * 날짜, 시간이저장되는 구조체
- * */
-static struct result
-{
-    char name[30];
-    long point;
-    int year;
-    int month;
-    int day;
-    int hour;
-    int min;
-    int rank;
-} temp_result;
+#include "result.h"
 
 /*메뉴에서 기록검색시 호출되어 기록을 검색하는 함수*/
 int save_result(long point, int best_point)

@@ -20,12 +20,8 @@ int update(int signum)
             firststart++;
     }
 
-    printf("\n Score: %ld | Speed: %d | hihgest score: %d", point, countrange, best_point);
-
-    display_tetris_table();
+    display_tetris_table(&countrange);
     check_one_line();
-
-    printf("\n GAME STOP : P");
 
     if (downcount == countrange - 1)
     {
