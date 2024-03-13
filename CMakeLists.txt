@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 project(tetrisV01)
 
-add_executable(tetrisV01 src/tetrisV01.c src/display_menu.c src/getch.c src/result.c)
+file(GLOB SRC_FILES "src/*.c")
+
+add_executable(tetrisV01 ${SRC_FILES})
 target_include_directories(tetrisV01 PUBLIC include)
+
+install(TARGETS tetrisV01 DESTINATION /usr/local/bin)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION /usr/local/include)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/ DESTINATION /usr/local/src FILES_MATCHING PATTERN "*.c")

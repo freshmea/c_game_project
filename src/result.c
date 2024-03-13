@@ -24,6 +24,11 @@ static struct result
 /*메뉴에서 기록검색시 호출되어 기록을 검색하는 함수*/
 int save_result(long point, int best_point)
 {
+    // 절대 경로 사용
+    char *home_dir = getenv("HOME");
+    char result_file[256];
+    sprintf(result_file, "%s/result", home_dir);
+
     FILE *fp = NULL;
     time_t ptime;
     struct tm *t;
@@ -45,7 +50,7 @@ int save_result(long point, int best_point)
     temp_result.hour = t->tm_hour;
     temp_result.min = t->tm_min;
 
-    fp = fopen("result", "ab");
+    fp = fopen(result_file, "ab");
     fseek(fp, 1, SEEK_END);
     fwrite(&temp_result, sizeof(struct result), 1, fp);
     fclose(fp);
@@ -54,12 +59,17 @@ int save_result(long point, int best_point)
 
 int search_result(void)
 {
+    // 절대 경로 사용
+    char *home_dir = getenv("HOME");
+    char result_file[256];
+    sprintf(result_file, "%s/result", home_dir);
+
     FILE *fp = NULL;
     char name[30];
     char ch;
     int find = 0;
 
-    fp = fopen("result", "rb");
+    fp = fopen(result_file, "rb");
 
     if (fp == NULL)
         return 0;
@@ -108,10 +118,15 @@ int search_result(void)
 /* 메뉴에서 기록출력시 호출되어 기록을 출력하는 함수*/
 int print_result(void)
 {
+    // 절대 경로 사용
+    char *home_dir = getenv("HOME");
+    char result_file[256];
+    sprintf(result_file, "%s/result", home_dir);
+
     FILE *fp = NULL;
     char ch = 1;
 
-    fp = fopen("result", "rb");
+    fp = fopen(result_file, "rb");
 
     if (fp == NULL)
         return 0;
