@@ -47,6 +47,7 @@ int display_tetris_table(int *countrange)
                 printf("□ ");
         }
     }
+    printf("\n");
 
     for (i = 2; i < 21; i++)
     {
