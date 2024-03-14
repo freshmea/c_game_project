@@ -1,6 +1,10 @@
 # c_game_project
-ubuntu 22.04 only using C language game project with ncurses library
-
+Environment: ubuntu 22.04 (virtual machine on windows 11 - Vmware Workstation)
+Programming Language: only using C language game project.
+IDE: Visual Studio Code
+CMake: 3.22.1
+C compiler: clang
+C standard: c11
 --- 
 2024-03-12
 ---
