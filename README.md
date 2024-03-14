@@ -56,3 +56,14 @@ tetrisV01
     - install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION /usr/local/include)
     - install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/ DESTINATION /usr/local/src FILES_MATCHING PATTERN "*.c")
   - 오브젝트 파일은 라이브러리 배포가 아니기 때문에 생략
+
+
+---
+2024-03-14
+---
+- branch 생성
+  - sound 를 추가하는 작업 을 함. 
+  - 쓰레드로 음악이 동작은 하는데 텍스트 출력과 scanf 의 작동이 안됨. 
+
+- [ ] TODO: ncurses 를 사용하여 텍스트 출력을 하고 getch() 함수를 사용하여 키 입력을 받아야 함.
+- [ ] TODO: sql 작동되는 branch도 만들어야 함. 
