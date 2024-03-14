@@ -5,6 +5,25 @@ IDE: Visual Studio Code
 CMake: 3.22.1
 C compiler: clang
 C standard: c11
+
+## tetrisV01 설치 방법
+- 순서대로 실행.
+```bash
+cd ~
+git clone https://github.com/freshmea/c_game_project.git
+cd c_game_project
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+```
+
+## tetrisV01 실행 방법
+```bash
+tetrisV01
+```
+
 --- 
 2024-03-12
 ---
