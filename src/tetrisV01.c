@@ -37,10 +37,11 @@ int main(void)
  */
 int game_start(void)
 {
-
+	pthread_t thread_id;
 	if (game == GAME_START)
 	{
 		init_tetris_table();
+		pthread_create(&thread_id, NULL, &play_music, NULL);
 
 		// 타이머 설정
 		static struct itimerval timer;
@@ -57,6 +58,7 @@ int game_start(void)
 			if (game == GAME_END)
 			{
 				signal(SIGALRM, SIG_IGN);
+				pthread_join(thread_id, NULL);
 				save_result(point, best_point);
 
 				x = 3, y = 0;

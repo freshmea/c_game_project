@@ -10,6 +10,7 @@
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <time.h>
+#include <pthread.h>
 
 /* 방향키, 회전키 설정*/
 enum Direction
@@ -62,5 +63,7 @@ int search_result(void);    /*메뉴에서 기록검색시 호출되어 기러�
 int save_result(long, int); /*게임종료시 호출되어 기록을 저장하는 함수*/
 // getch.c
 int getch(void); /*문자를 바로 입력 받을 수 있는 함수*/
+// play_background.c
+void *play_music(void *arg); /*배경음악을 실행하는 함수*/
 
 #endif // TETRISV01_H

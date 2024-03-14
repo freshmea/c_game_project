@@ -5,6 +5,7 @@ int display_tetris_table(int *countrange)
 {
     int i, j;
     char(*block_pointer)[4][4][4] = NULL;
+    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
     switch (next_block_number)
     {
@@ -30,7 +31,7 @@ int display_tetris_table(int *countrange)
         block_pointer = &o_block;
         break;
     }
-
+    pthread_mutex_lock(&mutex);
     system("clear");
     printf("\n Score: %ld | Speed: %d | hihgest score: %d", point, *countrange, best_point);
 
@@ -70,5 +71,6 @@ int display_tetris_table(int *countrange)
         printf("\n");
     }
     printf("\n GAME STOP : P");
+    pthread_mutex_unlock(&mutex);
     return 0;
 }

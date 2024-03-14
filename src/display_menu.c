@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 /* 메뉴를 보여줌 */
 int display_menu(void)
 {
 	int menu = 0;
-
-	while(1)
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	while (1)
 	{
+		pthread_mutex_lock(&mutex);
 		system("clear");
 		printf("\n\n\t\t\t\tText Tetris");
 		printf("\n\t\t\t============================");
@@ -19,8 +21,9 @@ int display_menu(void)
 		printf("\n\t\t\t   4) QUIT");
 		printf("\n\t\t\t============================");
 		printf("\n\t\t\t\t\t SELECT : ");
-		scanf("%d",&menu);
-		if(menu < 1 || menu > 4)
+		scanf("%d", &menu);
+		pthread_mutex_unlock(&mutex);
+		if (menu < 1 || menu > 4)
 		{
 			continue;
 		}
