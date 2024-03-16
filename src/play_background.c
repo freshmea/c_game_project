@@ -44,16 +44,21 @@ void *play_music(void *arg)
     playbuffer_size = mpg123_outblock(mh);
     playbuffer = (unsigned char *)malloc(playbuffer_size * sizeof(unsigned char));
 
-    while (mpg123_read(mh, playbuffer, playbuffer_size, &done) == MPG123_OK)
+    while (game != 1) // Check the value of 'game'
     {
-        if (game == 1) // Check the value of 'game'
+        while (mpg123_read(mh, playbuffer, playbuffer_size, &done) == MPG123_OK)
         {
-            break; // Stop playing music
+            if (game == 1) // Check the value of 'game'
+            {
+                break; // Stop playing music
+            }
+            else
+            {
+                ao_play(dev, playbuffer, done);
+            }
         }
-        else
-        {
-            ao_play(dev, playbuffer, done);
-        }
+
+        mpg123_seek(mh, 0, SEEK_SET); // Reset the song to the beginning
     }
 
     // Clean up
