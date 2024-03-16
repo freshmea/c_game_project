@@ -47,9 +47,9 @@ int game_start(void)
 		//  type 에러가 나면 오른쪽 사용. signal(SIGALRM, (void (*)(int))update);
 		signal(SIGVTALRM, (void (*)(int))update);
 		timer.it_value.tv_sec = 0;
-		timer.it_value.tv_usec = 1;
+		timer.it_value.tv_usec = 16667;
 		timer.it_interval.tv_sec = 0;
-		timer.it_interval.tv_usec = 1;
+		timer.it_interval.tv_usec = 16667;
 		setitimer(ITIMER_VIRTUAL, &timer, NULL);
 
 		while (1)
