@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <pthread.h>
 enum BlockType
 {
     I_BLOCK,
@@ -32,6 +32,5 @@ extern int next_block_number;
 extern long point;
 extern int best_point;
 extern char tetris_table[21][10];
-
 
 #endif // DISPLAY_TETRIS_H

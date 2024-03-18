@@ -30,7 +30,9 @@ int display_tetris_table(int *countrange)
         block_pointer = &o_block;
         break;
     }
-
+    pthread_mutex_t mutex;
+    pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_lock(&mutex);
     system("clear");
     printf("\n Score: %ld | Speed: %d | hihgest score: %d", point, *countrange, best_point);
 
@@ -38,7 +40,7 @@ int display_tetris_table(int *countrange)
 
     for (i = 0; i < 4; i++)
     {
-        printf("\n ");
+        printf("\n");
         for (j = 0; j < 4; j++)
         {
             if ((*block_pointer)[0][i][j] == 1)
@@ -47,6 +49,7 @@ int display_tetris_table(int *countrange)
                 printf("□ ");
         }
     }
+    printf("\n");
 
     for (i = 2; i < 21; i++)
     {
@@ -69,5 +72,6 @@ int display_tetris_table(int *countrange)
         printf("\n");
     }
     printf("\n GAME STOP : P");
+    pthread_mutex_unlock(&mutex);
     return 0;
 }
