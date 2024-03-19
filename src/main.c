@@ -1,5 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
+int block[4][4] = {
+    {1, 0, 0, 0},
+    {1, 0, 0, 0},
+    {1, 0, 0, 0},
+    {1, 0, 0, 0}};
+
+void display_tetris()
+{
+    system("clear");
+    printf("Next Block\n");
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (block == 0)
+            {
+                printf("o ");
+            }
+            else
+            {
+                printf("* ");
+            }
+        }
+    }
+}
+printf("Tetris\n");
+}
 
 int display_menu()
 {
@@ -28,6 +55,7 @@ int main()
     {
     case 1:
         printf("Game Start\n");
+        display_tetris();
         break;
     case 2:
         printf("Search history\n");
