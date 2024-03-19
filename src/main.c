@@ -15,7 +15,7 @@ void display_tetris()
     {
         for (int j = 0; j < 4; j++)
         {
-            if (block == 0)
+            if (block[i][j] == 0)
             {
                 printf("o ");
             }
