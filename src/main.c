@@ -10,6 +10,10 @@ int display_menu();
 void display_tetris();
 int game;
 int update(int signum);
+int x = 3;
+int y = 0;
+int point = 0;
+
 int game_start()
 {
     // signal 설정
@@ -25,6 +29,10 @@ int game_start()
     {
         while (1)
         {
+            x = 3;
+            y = 0;
+            point = 0;
+            return 1;
         }
     }
     game = GAME_END;
