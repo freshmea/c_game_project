@@ -13,6 +13,7 @@ int update(int signum);
 int x = 3;
 int y = 0;
 int point = 0;
+extern int tetris_table[21][10];
 
 int game_start()
 {
