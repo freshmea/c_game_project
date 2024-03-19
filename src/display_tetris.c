@@ -34,11 +34,11 @@ void display_tetris()
             {
                 printf("-");
             }
-            else if (tetris_table[block_state][j][i] == 0)
+            else if (tetris_table[j][i] == 0)
             {
                 printf("o");
             }
-            else if (tetris_table[block_state][j][i] == 1)
+            else if (tetris_table[j][i] == 1)
             {
                 printf("*");
             }
