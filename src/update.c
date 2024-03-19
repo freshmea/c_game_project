@@ -58,6 +58,7 @@ int update(int signum)
 
 int move_block(int command)
 {
+    printf("move_block\n");
     int i, j;
     int newx, newy;
     int oldx, oldy;
