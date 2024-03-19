@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-int block[4][4] = {
-    {1, 0, 0, 0},
-    {1, 0, 0, 0},
-    {1, 0, 0, 0},
-    {1, 0, 0, 0}};
-
-int tetris_table[21][10];
+#include "display_tetris.h"
 
 void display_tetris()
 {
