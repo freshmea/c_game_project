@@ -24,6 +24,7 @@ void display_tetris()
                 printf("* ");
             }
         }
+        printf("\n");
     }
     printf("\n\n");
     printf("Tetris Table\n");
@@ -48,6 +49,7 @@ void display_tetris()
             {
                 printf("*");
             }
+            printf("\n");
         }
     }
 }
