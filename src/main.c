@@ -24,10 +24,9 @@ int game_start()
     timer.it_interval.tv_sec = 0;
     timer.it_interval.tv_usec = 16667;
     setitimer(ITIMER_VIRTUAL, &timer, NULL);
-
-    if (game == GAME_START)
+    while (1)
     {
-        while (1)
+        if (game == GAME_END)
         {
             x = 3;
             y = 0;

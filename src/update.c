@@ -3,6 +3,8 @@ extern int x;
 extern int y;
 int block_state = 0;
 extern int block[4][4][4];
+extern int point;
+extern int tetris_table[21][10];
 
 typedef enum
 {
@@ -12,12 +14,46 @@ typedef enum
     ROTATE
 } COMMAND;
 
-int test = 0;
 int update(int signum)
 {
+    static int downcount = 0;
+    static int setcount = 0;
+    static long speedcount = 0;
+    static int countrange = 5;
+    static int firststart = 0;
+
     display_tetris();
-    test++;
-    printf("%d\n", test);
+
+    // down speed setting
+    if (downcount == countrange - 1)
+    {
+        point += 1;
+        move_block(DOWN);
+    }
+    if (speedcount == 499)
+    {
+        if (countrange != 1)
+            countrange--;
+    }
+    downcount++;
+    downcount %= countrange;
+    speedcount++;
+    speedcount %= 500;
+
+    // new block setting
+    if (collision_test(DOWN))
+    {
+        if (setcount == 9)
+        {
+            // block_number = next_block_number;
+            // next_block_number = rand() % 7;
+            block_state = 0;
+            x = 3;
+            y = 0;
+        }
+        setcount++;
+        setcount %= 10;
+    }
 }
 
 int move_block(int command)
