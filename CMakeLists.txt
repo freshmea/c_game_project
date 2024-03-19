@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 project(tetris_csk)
 
-add_executable(tetris_csk src/main.c src/display_menu.c src/display_tetris.c)
+file(GLOB SRC_FILES "src/*.c")
+
+add_executable(tetris_csk ${SRC_FILES})
 target_include_directories(tetris_csk PUBLIC include)
 
 install(TARGETS tetris_csk DESTINATION /usr/local/bin)
