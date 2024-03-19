@@ -2,11 +2,8 @@
 extern int x;
 extern int y;
 int block_state = 0;
+extern int block[4][4][4];
 
-// #define DOWN 0
-// #define LEFT 1
-// #define RIGHT 2
-// #define ROTATE 3
 typedef enum
 {
     DOWN,
