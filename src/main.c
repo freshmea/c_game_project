@@ -49,8 +49,8 @@ void display_tetris()
             {
                 printf("*");
             }
-            printf("\n");
         }
+        printf("\n");
     }
 }
 
