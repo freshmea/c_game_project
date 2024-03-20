@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             // "program": "${fileDirname}/build/${fileBasenameNoExtension}", // 수정된 부분
-            "program": "${workspaceFolder}/build/${fileBasenameNoExtension}", // 수정된 부분
+            "program": "${workspaceFolder}/build/tetris_csk", // 수정된 부분
             "args": [],
             "stopAtEntry": false,
             // "cwd": "${fileDirname}/build",
