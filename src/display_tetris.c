@@ -1,8 +1,42 @@
 #include "display_tetris.h"
+extern int i_block[4][4][4];
+extern int t_block[4][4][4];
+extern int s_block[4][4][4];
+extern int z_block[4][4][4];
+extern int l_block[4][4][4];
+extern int j_block[4][4][4];
+extern int o_block[4][4][4];
+extern int next_block_number;
 
 void display_tetris()
 {
     int i, j;
+    int(*block_pointer)[4][4][4] = NULL;
+
+    switch (next_block_number)
+    {
+    case 0:
+        block_pointer = &i_block;
+        break;
+    case 1:
+        block_pointer = &t_block;
+        break;
+    case 2:
+        block_pointer = &s_block;
+        break;
+    case 3:
+        block_pointer = &z_block;
+        break;
+    case 4:
+        block_pointer = &l_block;
+        break;
+    case 5:
+        block_pointer = &j_block;
+        break;
+    case 6:
+        block_pointer = &o_block;
+        break;
+    }
     system("clear");
     printf("Next Block\n");
     for (i = 0; i < 4; i++)
@@ -10,9 +44,9 @@ void display_tetris()
         printf("\n");
         for (j = 0; j < 4; j++)
         {
-            if (block[0][i][j] == 1)
+            if ((*block_pointer)[0][i][j] == 1)
                 printf("* ");
-            else if (block[0][i][j] == 0)
+            else if ((*block_pointer)[0][i][j] == 0)
                 printf("o ");
         }
     }
