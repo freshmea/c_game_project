@@ -265,6 +265,10 @@ int move_block(int command)
             break;
         }
     }
+    else
+    {
+        return 1;
+    }
     // 포인터가 블록 종류에 맞게 연결
     switch (block_number)
     {
@@ -329,6 +333,29 @@ int collision_test(int command)
     oldx = tempx = x;
     oldy = tempy = y;
     temp_block_state = block_state;
+
+    // 포인터가 블록 종류에 맞게 연결
+    switch (block_number)
+    {
+    case 0:
+        block_pointer = &i_block;
+        break;
+    case 1:
+        block_pointer = &t_block;
+        break;
+    case 2:
+        block_pointer = &s_block;
+        break;
+    case 3:
+        block_pointer = &z_block;
+        break;
+    case 4:
+        block_pointer = &j_block;
+        break;
+    case 5:
+        block_pointer = &o_block;
+        break;
+    }
 
     switch (command)
     {
