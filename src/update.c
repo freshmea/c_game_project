@@ -8,7 +8,7 @@ int block_state = 0;
 extern int block[4][4][4];
 extern int point;
 extern int tetris_table[21][10];
-extern int block_number;
+int block_number;
 char getch();
 extern int game;
 int i_block[4][4][4] =
@@ -293,7 +293,7 @@ int move_block(int command)
     {
         for (j = 0, oldx = x; j < 4; j++, oldx++)
         {
-            if (block[old_block_state][i][j] == 1)
+            if ((*block_pointer)[old_block_state][i][j] == 1)
             {
                 tetris_table[oldy][oldx] = 0;
             }
@@ -309,7 +309,7 @@ int move_block(int command)
         {
             if (newx > 0 && newx < 9 && newy < 20 && newy > 0)
             {
-                tetris_table[newy][newx] = block[block_state][i][j];
+                tetris_table[newy][newx] = (*block_pointer)[block_state][i][j];
             }
         }
     }
@@ -323,6 +323,7 @@ int collision_test(int command)
     int oldx, oldy;
     int temp_block_state;
     int temp_tetris_table[21][10];
+    int(*block_pointer)[4][4][4];
 
     // daisy chain
     oldx = tempx = x;
@@ -362,7 +363,7 @@ int collision_test(int command)
     {
         for (j = 0; j < 4; j++)
         {
-            if (temp_tetris_table[tempy + i][tempx + j] == 1 && block[temp_block_state][i][j] == 1)
+            if (temp_tetris_table[tempy + i][tempx + j] == 1 && (*block_pointer)[temp_block_state][i][j] == 1)
             {
                 return 1;
             }
