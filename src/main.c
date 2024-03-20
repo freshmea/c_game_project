@@ -24,6 +24,7 @@ int y = 0;
 int point = 0;
 extern int tetris_table[21][10];
 void save_result(int);
+void print_result(void);
 
 /**
  * @brief 이 함수는 signal을 설정하는 함수입니다.
@@ -72,6 +73,7 @@ int main()
         break;
     case 3:
         printf("Record Output\n");
+        print_result();
         break;
     case 4:
         printf("Quit\n");
