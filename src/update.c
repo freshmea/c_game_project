@@ -9,6 +9,7 @@ extern int block[4][4][4];
 extern int point;
 extern int tetris_table[21][10];
 int block_number;
+int next_block_number;
 char getch();
 extern int game;
 int i_block[4][4][4] =
@@ -173,7 +174,7 @@ int update(int signum)
             firststart++;
     }
 
-    display_tetris_table(&countrange);
+    display_tetris();
     check_one_line();
 
     if (downcount == countrange - 1)
@@ -267,7 +268,7 @@ int move_block(int command)
     int newx, newy;
     int oldx, oldy;
     int old_block_state;
-    char(*block_pointer)[4][4][4] = NULL;
+    int(*block_pointer)[4][4][4] = NULL;
 
     newx = x;
     newy = y;
@@ -300,30 +301,30 @@ int move_block(int command)
 
     switch (block_number)
     {
-    case I_BLOCK:
+    case 0:
         block_pointer = &i_block;
         break;
-    case T_BLOCK:
+    case 1:
         block_pointer = &t_block;
         break;
-    case S_BLOCK:
+    case 2:
         block_pointer = &s_block;
         break;
-    case Z_BLOCK:
+    case 3:
         block_pointer = &z_block;
         break;
-    case L_BLOCK:
+    case 4:
         block_pointer = &l_block;
         break;
-    case J_BLOCK:
+    case 5:
         block_pointer = &j_block;
         break;
-    case O_BLOCK:
+    case 6:
         block_pointer = &o_block;
         break;
     }
 
-    for (i = 0, oldy = y; i < 4; i++, oldy++)
+        for (i = 0, oldy = y; i < 4; i++, oldy++)
     {
         for (j = 0, oldx = x; j < 4; j++, oldx++)
         {
@@ -356,8 +357,8 @@ int collision_test(int command)
     int tempx, tempy;
     int oldx, oldy;
     int temp_block_state;
-    char(*block_pointer)[4][4][4];
-    char temp_tetris_table[21][10];
+    int(*block_pointer)[4][4][4];
+    int temp_tetris_table[21][10];
 
     oldx = tempx = x;
     oldy = tempy = y;
@@ -382,25 +383,25 @@ int collision_test(int command)
 
     switch (block_number)
     {
-    case I_BLOCK:
+    case 0:
         block_pointer = &i_block;
         break;
-    case T_BLOCK:
+    case 1:
         block_pointer = &t_block;
         break;
-    case S_BLOCK:
+    case 2:
         block_pointer = &s_block;
         break;
-    case Z_BLOCK:
+    case 3:
         block_pointer = &z_block;
         break;
-    case L_BLOCK:
+    case 4:
         block_pointer = &l_block;
         break;
-    case J_BLOCK:
+    case 5:
         block_pointer = &j_block;
         break;
-    case O_BLOCK:
+    case 6:
         block_pointer = &o_block;
         break;
     }
