@@ -23,6 +23,7 @@ int x = 3;
 int y = 0;
 int point = 0;
 extern int tetris_table[21][10];
+void save_result(int);
 
 /**
  * @brief 이 함수는 signal을 설정하는 함수입니다.
@@ -44,6 +45,8 @@ int game_start()
     {
         if (game == GAME_END)
         {
+            signal(SIGVTALRM, SIG_IGN);
+            save_result(point);
             x = 3;
             y = 0;
             point = 0;
