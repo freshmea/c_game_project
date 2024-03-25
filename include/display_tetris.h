@@ -1,3 +1,11 @@
+/**
+ * @file display_tetris.h
+ * @brief 테트리스 게임의 출력을 담당하는 헤더 파일
+ * @details 테트리스 게임의 출력을 담당하는 함수들을 선언한다.
+ * @date 2021-03-21
+ * @author 최수길, 김진호, 강민우, 정현우
+ */
+
 #ifndef DISPLAY_TETRIS_H
 #define DISPLAY_TETRIS_H
 
@@ -24,6 +32,10 @@ extern int next_block_number;
 extern int tetris_table[21][10];
 extern int block_state;
 
+/**
+ * @brief update 함수에서 호출되는 게임 정보를 출력하는 함수
+ * @details 다음 블록을 출력하고, 색상을 입힌다.
+ */
 void display_tetris(void);
 
 #endif // DISPLAY_TETRIS_H

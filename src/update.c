@@ -1,6 +1,5 @@
 #include "update.h"
 
-/* 테트리스 게임의 내부 로직 함수 */
 int update(int signum)
 {
     static int downcount = 0;
@@ -107,7 +106,6 @@ int update(int signum)
     return 0;
 }
 
-/*이동, 회전키가 입력되면, 충돌검사후 이동시킨다*/
 int move_block(int command)
 {
     int i, j;
@@ -196,7 +194,6 @@ int move_block(int command)
     return 0;
 }
 
-/* 블록이 이동, 회전하기 전에 충돌되는 블록이나 벽이 없는지 확인하는 함수*/
 int collision_test(int command)
 {
     int i, j;
@@ -285,7 +282,6 @@ int collision_test(int command)
     return 0;
 }
 
-/* 충돌되기 전까지 블록을 다운시킨다.*/
 int drop(void)
 {
     while (!collision_test(DOWN))
@@ -294,7 +290,6 @@ int drop(void)
     return 0;
 }
 
-/* 한줄이 완성되었는지 확인하는 함수. 완성되면 한줄을 지우고, 점수에 1000점을 더한다*/
 int check_one_line(void)
 {
     int i, j;
