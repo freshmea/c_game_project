@@ -1,83 +1,151 @@
-# c_game_project
-Environment: ubuntu 22.04 (virtual machine on windows 11 - Vmware Workstation)
-Programming Language: only using C language game project.
-IDE: Visual Studio Code
-CMake: 3.22.1
-C compiler: clang
-C standard: c11
+# HM2J_c
 
-## tetrisV01 설치 방법
-- 순서대로 실행.
+C + MySQL
+
+# Table of Contents (목차)
+
+- [Requirements (필요사항)](#Requirements)
+- [Usage (사용법)](#Usage)
+- [TODO (할일)](#TODO)
+
+# Requirements
+
+- [Git](https://git-scm.com/)  
+  To clone this repo `git clone https://github.com/skoler/HM2J_c.git`
+
+  ```bash
+  sudo snap install git
+  ```
+
+- [Doxygen](https://doxygen.org/) >= 1.9.1  
+  For documentation
+
+  ```bash
+  sudo apt install doxygen doxygen-gui graphviz
+  brew install --cask doxygen
+  ```
+
+- [CMake](https://cmake.org) >= 3.10  
+  To build this project
+
+  ```bash
+  sudo apt install cmake
+  brew install cmake
+  ```
+
+- [MySQL](https://www.mysql.com/) >= 8.3.0
+  To manage data by Database
+  ```bash
+  sudo apt install mysql-server
+  sudo mysql
+  ```
+
+# Usage
+
+## Git
+
+### Commands (명령어)
+
+- 깃허브 원격저장소(remote repository)를 현재컴퓨터(local)에 복사(clone) 하기
+
 ```bash
-cd ~
-git clone https://github.com/freshmea/c_game_project.git
-cd c_game_project
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
+  git clone <url>
 ```
 
-## tetrisV01 실행 방법
+- 저장소 줄기(branch)들 확인하기
+  - 현재 접속중인 줄기(branch)들 확인
+  - 모든 줄기(branch)들 확인
+
 ```bash
-tetrisV01
+  git branch
 ```
 
---- 
-2024-03-12
----
-- project start
-- Doxyfile 세팅
-- README.md 작성
-- .gitignore 추가
-- .vscode/ 추가
-  - tasks.json
-  - launch.json
-  - settings.json
-  - c_cpp_properties.json
-- 참고 사이트 : 
-  - https://blog.naver.com/hardinge/220515010763
-- 파일 분할 하기
-  - 메인 함수: tetrisV01.c
-  - 화면 출력 함수: display_menu.c, display_tetris.c
-  - 파일 출력 함수: result.c
-  - 게임 로직 함수: update.c
-  - 그림 링크 update.png
-![Update Image](update.png)
-![collision Image](collision.png)
-  - 키 인식 함수: getch.c
-- cmakefiles 작성
-  - 폴내 내의 모든 소스 파일 인식 
-    - file(GLOB SRC_FILES "*.c")
-  - 실행 파일 인스톨 설정
-    - install(TARGETS tetrisV01 DESTINATION /usr/local/bin)
-  - 헤더 및 소스 파일 인스톨 설정
-    - install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION /usr/local/include)
-    - install(DIRECTORY ${CMAKE_SOURCE_DIR}/src/ DESTINATION /usr/local/src FILES_MATCHING PATTERN "*.c")
-  - 오브젝트 파일은 라이브러리 배포가 아니기 때문에 생략
+- 줄기(branch) 만들기
 
+```bash
+  git branch <branch>
+```
 
----
-2024-03-14
----
-- branch 생성
-  - sound 를 추가하는 작업 을 함. 
-  - 쓰레드로 음악이 동작은 하는데 텍스트 출력과 scanf 의 작동이 안됨. 
+- 줄기(branch) 삭제하기
 
-- [ ] TODO: ncurses 를 사용하여 텍스트 출력을 하고 getch() 함수를 사용하여 키 입력을 받아야 함.
-- [ ] TODO: sql 작동되는 branch도 만들어야 함. 
+  ```bash
+  git branch -d <branch>
+  ```
 
----
-2024-03-16
----
-- signal 함수를 60Hz 설정 함. 화면 깨지는 문제 해결
-- 배경음악이 다 틀어지면 반복재생할 수 있게 만듬.
+- 줄기(branch) 접속(checkout)하기
 
+```bash
+  git checkout <branch>
+```
 
----
-2024-03-25
----
-- 학생들 프로젝트가 마무리 됨.
-- 3개조의 프로젝트를 정리 하고 브랜치를 만들어서 정리함.
-  - 
+- 원격저장소 `origin`의 파일들을 현재컴퓨터에 가져와,덮어쓰기(pull) - **주의** 기존파일과 충돌(conflict)할수 있음
+
+```bash
+  git pull origin <branch>
+```
+
+- git이 관리할 파일 추가(add)하기
+
+  ```bash
+  # 하나씩 추가하기
+  git add <filename>
+
+  # 현재폴더(.)에 있는 파일 모두 추가하기
+  # 이때 .gitignore 에 있는 파일들은 제외된다
+  git add .
+  ```
+
+- git이 관리중이던(`--cached` 옵션) 파일을, 더 이상 관리하지 않도록 삭제(remove: `rm`)하기
+
+  ```bash
+  git rm --cached <filename>
+  ```
+
+- git이 관리중인 파일 상태(status) 확인하기
+
+  ```bash
+  git status
+  ```
+
+- git이 관리중인 파일들의 상태를, 설명(`-m` 옵션)과 함께 세이브, 저장(commit)하기
+
+  ```bash
+  git commit -m "message"
+  ```
+
+- 줄기(branch)안에 모든 세이브 파일들(commit)을, Github 원격저장소(remote repository, name: origin)에 업로드(push)하기
+
+  ```bash
+  git push origin <branch>
+  ```
+
+- feature/gotcha 줄기(branch)에, main 줄기를 합치기(merge). **방향 주의**
+
+  ```bash
+  # feature/gotcha 줄기 접속
+  git checkout feature/gotcha
+  # 현재줄기(feature/gotcha)에 main 줄기를 합치기
+  git merge feature/gotcha
+  ```
+
+### Git으로 프로젝트 관리하기
+
+#### Github Flow
+
+Github가 Git으로 프로젝트를 관리하는 방법
+
+1. main 줄기(branch)를 만들기  
+   실제로 사용자에게 배포(release)하는 줄기
+
+   - 이 줄기에 다른 줄기를 합치려면, feature 줄기에서 합친후(merge), 테스트가 되어야한다.
+
+2. `feature/기능` 줄기(branch)를 만들기  
+   새로운 기능을 추가하는 줄기
+
+   - 새로운 기능이 필요할 때마다, 새로운 프랜치를 만든다.  
+     ex: `git branch feature/gotcha`
+
+# TODO
+
+- [ ] Add Usage to documentation
+- [ ] Add MySQL support
