@@ -3,7 +3,6 @@
 #include <time.h>
 
 // 함수 선언
-int getRandomScore();
 int chooseDoll(int score);
 
 int new(int a)

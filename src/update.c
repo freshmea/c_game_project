@@ -2,21 +2,36 @@
 #include <time.h>
 #include <stdlib.h>
 
+#define GAME_START 0
+#define GAME_END 1
+
+typedef enum
+{
+    DOWN,
+    LEFT,
+    RIGHT,
+    ROTATE
+} COMMAND;
+
 extern int x;
 extern int y;
-int block_state = 0;
 extern int block[4][4][4];
 extern int point;
 extern int tetris_table[21][10];
+extern int game;
+
+int block_state = 0;
 int block_number;
 int next_block_number;
-char getch();
-int display_tetris();
+
+int update(int signum);
 int check_one_line(void);
 int move_block(int command);
 int collision_test(int command);
 int drop(void);
-extern int game;
+
+int display_tetris();
+char getch();
 
 int i_block[4][4][4] =
     {
@@ -165,16 +180,7 @@ int o_block[4][4][4] =
 
 };
 
-#define GAME_START 0
-#define GAME_END 1
-
-typedef enum
-{
-    DOWN,
-    LEFT,
-    RIGHT,
-    ROTATE
-} COMMAND;
+/* 테트리스 게임의 내부 로직 함수 */
 int update(int signum)
 {
     static int downcount = 0;

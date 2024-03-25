@@ -21,19 +21,24 @@ static const int port = 3306;
 
 static RESULT tmp;
 
+// 외부 함수 선언
+int new(int a);
 /**
  * @brief MySQL Result를 출력합니다
  * @param conn MySQL DB
  */
-int print_result(MYSQL *conn) {
+int print_result(MYSQL *conn)
+{
   MYSQL_RES *res;
   MYSQL_ROW row;
   res = mysql_store_result(conn);
-  if (!res) {
+  if (!res)
+  {
     fprintf(stderr, "%s\n", mysql_error(conn));
     return ERR;
   }
-  while ((row = mysql_fetch_row(res)) != NULL) {
+  while ((row = mysql_fetch_row(res)) != NULL)
+  {
     printf("%s\n", row[0]);
   }
 
@@ -45,16 +50,19 @@ int print_result(MYSQL *conn) {
  * @param conn MySQL DB
  * @return RESULT
  */
-RESULT *get_one_row(MYSQL *conn) {
+RESULT *get_one_row(MYSQL *conn)
+{
   MYSQL_RES *res;
   MYSQL_ROW row;
   res = mysql_store_result(conn);
-  if (!res) {
+  if (!res)
+  {
     fprintf(stderr, "%s\n", mysql_error(conn));
     return NULL;
   }
 
-  while ((row = mysql_fetch_row(res)) != NULL) {
+  while ((row = mysql_fetch_row(res)) != NULL)
+  {
     // printf("%s, %s, %s, %s, %s, %s, %s, %s\n", row[0], row[1], row[2],
     // row[3],
     //        row[4], row[5], row[6], row[7]);
@@ -76,24 +84,28 @@ RESULT *get_one_row(MYSQL *conn) {
  * @brief MySQL DB를 테스트합니다
  * @param conn MySQL DB
  */
-int test_db(MYSQL *conn) {
+int test_db(MYSQL *conn)
+{
   printf("################\n");
   printf("[test_db] SHOW databases\n");
 
   // show all databases
-  if (mysql_query(conn, "SHOW DATABASES;")) {
+  if (mysql_query(conn, "SHOW DATABASES;"))
+  {
     printf("SHOW Query failed\n");
     return ERR;
   }
 
-  if (print_result(conn)) {
+  if (print_result(conn))
+  {
     printf("Print Result failed\n");
     return ERR;
   };
 
   printf("################\n");
   printf("[show_table] SHOW TABLES\n");
-  if (mysql_query(conn, "SHOW TABLES;")) {
+  if (mysql_query(conn, "SHOW TABLES;"))
+  {
     printf("SHOW TABLES Query failed\n");
     return ERR;
   }
@@ -105,11 +117,13 @@ int test_db(MYSQL *conn) {
  * @brief MySQL DB를 사용합니다
  * @param conn MySQL DB
  */
-int use_db(MYSQL *conn) {
+int use_db(MYSQL *conn)
+{
   printf("################\n");
   printf("[use_db] USE hm2j\n");
   // use database
-  if (mysql_query(conn, "USE hm2j")) {
+  if (mysql_query(conn, "USE hm2j"))
+  {
     printf("USE Query failed\n");
     return ERR;
   }
@@ -121,11 +135,13 @@ int use_db(MYSQL *conn) {
  * @brief MySQL Table을 삭제합니다
  * @param conn MySQL DB
  */
-int drop_table(MYSQL *conn) {
+int drop_table(MYSQL *conn)
+{
   printf("################\n");
   printf("[drop_table] DROP TABLE log\n");
   // drop table
-  if (mysql_query(conn, "DROP TABLE IF EXISTS log;")) {
+  if (mysql_query(conn, "DROP TABLE IF EXISTS log;"))
+  {
     printf("DROP TABLE Query failed\n");
     return ERR;
   }
@@ -137,7 +153,8 @@ int drop_table(MYSQL *conn) {
  * @brief MySQL DB를 생성합니다
  * @param conn MySQL DB
  */
-int create_table(MYSQL *conn) {
+int create_table(MYSQL *conn)
+{
   // create table
   if (mysql_query(conn, "CREATE TABLE IF NOT EXISTS log ("
                         "id INT AUTO_INCREMENT PRIMARY KEY,"
@@ -147,7 +164,8 @@ int create_table(MYSQL *conn) {
                         "month INT,"
                         "day INT,"
                         "hour INT,"
-                        "min INT);")) {
+                        "min INT);"))
+  {
     printf("CREATE TABLE Query failed\n");
     return ERR;
   }
@@ -158,11 +176,13 @@ int create_table(MYSQL *conn) {
 /**
  * @brief MySQL DB를 초기화합니다
  */
-void init_db() {
+void init_db()
+{
   // establish connection with mysql
   conn = mysql_init(NULL);
   // if connection failed
-  if (!mysql_real_connect(conn, host, user, passwd, db, port, NULL, 0)) {
+  if (!mysql_real_connect(conn, host, user, passwd, db, port, NULL, 0))
+  {
     fprintf(stderr, "%s\n", mysql_error(conn));
     mysql_close(conn);
     exit(1);
@@ -175,8 +195,10 @@ void init_db() {
 /**
  * @brief MySQL DB를 종료합니다
  */
-void close_db() {
-  if (conn != NULL) {
+void close_db()
+{
+  if (conn != NULL)
+  {
     mysql_close(conn);
   }
 }
@@ -186,28 +208,33 @@ void close_db() {
  * @param name  이름을 통해 사용자 검색
  * @return RESULT 구조체 주소 or NULL을 돌려줍니다
  */
-void read_db() {
+void read_db()
+{
   char query[256];
   printf("이름을 입력하세요: ");
   scanf("%s", tmp.name);
   snprintf(query, sizeof(query), "SELECT * FROM log WHERE name = '%s'", tmp.name);
-  if (mysql_query(conn, query)) {
+  if (mysql_query(conn, query))
+  {
     printf("SELECT Query failed\n");
   }
 
   RESULT *res = get_one_row(conn);
-  if (res == NULL) {
+  if (res == NULL)
+  {
     system("clear");
     printf("********************************\n");
     printf("No History");
     printf("********************************\n");
-  } else {
-      system("clear");
-      printf("********************************\n");
-      printf("%s\n", res->name);
-      printf("%d\n", res->point);
-      printf("time: %d-%d-%d %d:%d\n", res->year, res->month, res->day, res->hour, res->min);
-      printf("********************************\n");
+  }
+  else
+  {
+    system("clear");
+    printf("********************************\n");
+    printf("%s\n", res->name);
+    printf("%d\n", res->point);
+    printf("time: %d-%d-%d %d:%d\n", res->year, res->month, res->day, res->hour, res->min);
+    printf("********************************\n");
   }
 }
 
@@ -215,11 +242,12 @@ void read_db() {
  * @brief MySQL DB에 데이터를 저장할 수 있습니다
  * @param point 점수, 아이디
  */
-void write_db(int point) {
+void write_db(int point)
+{
   printf("이름을 입력하세요: ");
   scanf("%s", tmp.name);
 
-  new(point);
+  new (point);
   tmp.point = point;
 
   time_t now_sec = time(NULL);
@@ -231,7 +259,8 @@ void write_db(int point) {
   tmp.hour = now->tm_hour;
   tmp.min = now->tm_min;
 
-  if (conn == NULL) {
+  if (conn == NULL)
+  {
     init_db();
   }
 
@@ -242,7 +271,8 @@ void write_db(int point) {
            "INSERT INTO log (name, point, year, month, day, hour, min) VALUES "
            "('%s', %d, %d, %d, %d, %d, %d)",
            tmp.name, tmp.point, tmp.year, tmp.month, tmp.day, tmp.hour, tmp.min);
-  if (mysql_query(conn, query)) {
+  if (mysql_query(conn, query))
+  {
     printf("INSERT Query failed: %s\n", mysql_error(conn));
   }
 }

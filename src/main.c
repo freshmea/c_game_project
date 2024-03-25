@@ -1,10 +1,10 @@
 /**
  * @file main.c
  * @brief 테트리스 게임을 실행하는 메인 함수
- * @author 최수길
+ * @author 최수길, 김진호, 강민우, 정현우, 김진성
  * @date 2024-3-20
  * @details 이 게임은 signal을 사용해서 1/60 초 마다 화면을 갱신 하는 것을 이용한
- * 프로그램입니다.
+ * @details 프로그램입니다.
  */
 
 #include "db.h"
@@ -16,19 +16,15 @@
 #define GAME_START 0
 #define GAME_END 1
 
-int display_menu(void);
+void display_menu(int *menu);
 void display_tetris(void);
 int init_tetris_table(void);
-int game;
 int update(int signum);
+int game;
 int x = 3;
 int y = 0;
 int point = 0;
 extern int tetris_table[21][10];
-void save_result(int);
-int print_result(void);
-int print_color();
-char q;
 
 /**
  * @brief 이 함수는 signal을 설정하는 함수입니다.
@@ -51,7 +47,6 @@ int game_start()
         if (game == GAME_END)
         {
             signal(SIGVTALRM, SIG_IGN);
-            // save_result(point);
             write_db(point);
             x = 3;
             y = 0;
@@ -64,8 +59,8 @@ int game_start()
 
 int main()
 {
-    int menu = 1;
-    menu = display_menu();
+    int menu;
+    display_menu(&menu);
     switch (menu)
     {
     case 1:
@@ -74,7 +69,7 @@ int main()
         menu = game_start();
         break;
     case 2:
-        printf("Search history\n");
+        printf("전적 검색\n");
         init_db();
         read_db();
         close_db();
@@ -112,4 +107,5 @@ int init_tetris_table()
         tetris_table[i][0] = 1;
         tetris_table[i][9] = 1;
     }
+    return 0;
 }
