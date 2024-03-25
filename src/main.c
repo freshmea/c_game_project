@@ -40,7 +40,7 @@ int game_start()
 {
     // signal 설정
     static struct itimerval timer;
-    signal(SIGVTALRM, update);
+    signal(SIGVTALRM, (void (*)(int))update);
     timer.it_value.tv_sec = 0;
     timer.it_value.tv_usec = 16667;
     timer.it_interval.tv_sec = 0;
