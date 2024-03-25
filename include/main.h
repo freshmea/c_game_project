@@ -1,6 +1,6 @@
 
 /**
- * @file main.c
+ * @file main.h
  * @brief 테트리스 게임을 실행하는 메인 함수
  * @author 최수길, 김진호, 강민우, 정현우, 김진성
  * @date 2024-3-20

@@ -3,8 +3,7 @@
  * @brief 테트리스 게임의 내부 로직을 담당하는 헤더 파일
  * @details signal을 받아서 게임을 진행한다.
  * @details 1/60 초 마다 실행이 된다.
-
-*/
+ */
 
 #ifndef UPDATE_H
 #define UPDATE_H
