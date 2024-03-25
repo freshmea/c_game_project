@@ -1,32 +1,5 @@
-/**
- * @file db.c
- * @brief MySQL DB Functions
- * @author xxxx
- * @date 2024-03-21
- * @detail MySQL DB와 연결하고, 데이터를 저장, 가져올 수 있습니다.
- */
 #include "db.h"
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
-#define ERR 1
-#define OK 0
 
-static MYSQL *conn = NULL;
-static const char *host = "localhost";
-static const char *user = "root";
-static const char *passwd = "0000";
-static const char *db = "hm2j";
-static const int port = 3306;
-
-static RESULT tmp;
-
-// 외부 함수 선언
-int new(int a);
-/**
- * @brief MySQL Result를 출력합니다
- * @param conn MySQL DB
- */
 int print_result(MYSQL *conn)
 {
   MYSQL_RES *res;
@@ -45,11 +18,6 @@ int print_result(MYSQL *conn)
   return OK;
 }
 
-/**
- * @brief MySQL DB에서 log 데이터를 가져올 수 있습니다
- * @param conn MySQL DB
- * @return RESULT
- */
 RESULT *get_one_row(MYSQL *conn)
 {
   MYSQL_RES *res;
@@ -63,10 +31,6 @@ RESULT *get_one_row(MYSQL *conn)
 
   while ((row = mysql_fetch_row(res)) != NULL)
   {
-    // printf("%s, %s, %s, %s, %s, %s, %s, %s\n", row[0], row[1], row[2],
-    // row[3],
-    //        row[4], row[5], row[6], row[7]);
-    // string copy
     strcpy(tmp.name, row[1]);
     // convert string to int
     tmp.point = atoi(row[2]);
@@ -80,10 +44,6 @@ RESULT *get_one_row(MYSQL *conn)
   return &tmp;
 }
 
-/**
- * @brief MySQL DB를 테스트합니다
- * @param conn MySQL DB
- */
 int test_db(MYSQL *conn)
 {
   printf("################\n");
@@ -113,10 +73,6 @@ int test_db(MYSQL *conn)
   return print_result(conn);
 }
 
-/**
- * @brief MySQL DB를 사용합니다
- * @param conn MySQL DB
- */
 int use_db(MYSQL *conn)
 {
   printf("################\n");
@@ -131,10 +87,6 @@ int use_db(MYSQL *conn)
   return OK;
 }
 
-/**
- * @brief MySQL Table을 삭제합니다
- * @param conn MySQL DB
- */
 int drop_table(MYSQL *conn)
 {
   printf("################\n");
@@ -149,10 +101,6 @@ int drop_table(MYSQL *conn)
   return print_result(conn);
 }
 
-/**
- * @brief MySQL DB를 생성합니다
- * @param conn MySQL DB
- */
 int create_table(MYSQL *conn)
 {
   // create table
@@ -173,9 +121,6 @@ int create_table(MYSQL *conn)
   return print_result(conn);
 }
 
-/**
- * @brief MySQL DB를 초기화합니다
- */
 void init_db()
 {
   // establish connection with mysql
@@ -192,9 +137,6 @@ void init_db()
   create_table(conn);
 }
 
-/**
- * @brief MySQL DB를 종료합니다
- */
 void close_db()
 {
   if (conn != NULL)
@@ -203,11 +145,6 @@ void close_db()
   }
 }
 
-/**
- * @brief MySQL DB에서 데이터를 가져올 수 있습니다
- * @param name  이름을 통해 사용자 검색
- * @return RESULT 구조체 주소 or NULL을 돌려줍니다
- */
 void read_db()
 {
   char query[256];
@@ -238,10 +175,6 @@ void read_db()
   }
 }
 
-/**
- * @brief MySQL DB에 데이터를 저장할 수 있습니다
- * @param point 점수, 아이디
- */
 void write_db(int point)
 {
   printf("이름을 입력하세요: ");

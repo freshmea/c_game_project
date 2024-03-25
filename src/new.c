@@ -4,6 +4,7 @@
 
 // 함수 선언
 int chooseDoll(int score);
+int new(int a);
 
 int new(int a)
 {
