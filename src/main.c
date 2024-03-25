@@ -16,8 +16,9 @@
 #define GAME_START 0
 #define GAME_END 1
 
-int display_menu();
-void display_tetris();
+int display_menu(void);
+void display_tetris(void);
+int init_tetris_table(void);
 int game;
 int update(int signum);
 int x = 3;

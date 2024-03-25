@@ -12,6 +12,10 @@ int block_number;
 int next_block_number;
 char getch();
 int display_tetris();
+int check_one_line(void);
+int move_block(int command);
+int collision_test(int command);
+int drop(void);
 extern int game;
 
 int i_block[4][4][4] =
@@ -33,7 +37,7 @@ int i_block[4][4][4] =
          {1, 0, 0, 0},
          {1, 0, 0, 0}}
 
-         };
+};
 
 int t_block[4][4][4] =
     {
@@ -53,8 +57,8 @@ int t_block[4][4][4] =
          {2, 2, 0, 0},
          {0, 2, 0, 0},
          {0, 0, 0, 0}}
-        
-         };
+
+};
 
 int s_block[4][4][4] =
     {
@@ -74,8 +78,8 @@ int s_block[4][4][4] =
          {0, 3, 3, 0},
          {0, 0, 0, 0},
          {0, 0, 0, 0}}
-        
-         };
+
+};
 
 int z_block[4][4][4] =
     {
@@ -95,8 +99,8 @@ int z_block[4][4][4] =
          {4, 0, 4, 0},
          {0, 0, 0, 0},
          {0, 0, 0, 0}}
-        
-         };
+
+};
 
 int l_block[4][4][4] =
     {
@@ -116,8 +120,8 @@ int l_block[4][4][4] =
          {5, 5, 5, 0},
          {0, 0, 0, 0},
          {0, 0, 0, 0}}
-        
-         };
+
+};
 
 int j_block[4][4][4] =
     {
@@ -137,8 +141,8 @@ int j_block[4][4][4] =
          {0, 0, 6, 0},
          {0, 0, 0, 0},
          {0, 0, 0, 0}}
-        
-         };
+
+};
 
 int o_block[4][4][4] =
     {
@@ -158,8 +162,8 @@ int o_block[4][4][4] =
          {7, 7, 0, 0},
          {0, 0, 0, 0},
          {0, 0, 0, 0}}
-        
-         };
+
+};
 
 #define GAME_START 0
 #define GAME_END 1
@@ -340,7 +344,7 @@ int move_block(int command)
         break;
     }
 
-        for (i = 0, oldy = y; i < 4; i++, oldy++)
+    for (i = 0, oldy = y; i < 4; i++, oldy++)
     {
         for (j = 0, oldx = x; j < 4; j++, oldx++)
         {
