@@ -1,72 +1,59 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "game.h"
-#include "utility.h"
+#include "main.h"
 
-int display_menu() {
-    int menu;
+int main(void)
+{
+    int menu = 1;
+    menu = display_menu();
 
-    system("clear");
-    
-    printf("\n");
-    printf("\033[94m▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ \n");
-    printf("\033[94m▧                                                                                 ▧\n");
-    printf("\033[94m▧ \033[0m ");
-    printf("　　　■ ■ ■ ■ 　 ■ ■ ■ 　　■ ■ 　  ■ 　 ■ ■ ■ 　 　 ■ ■ ■ ■ 　 ■ ■ ■ ■　　     \033[94m▧\n");
-    printf("\033[94m▧\033[0m ");
-    printf("　　 　■ 　　　　　 ■ 　 　 ■  ■    ■ 　 ■ 　  ■ 　 　 　　■    ■　　  　       \033[94m▧ \n");
-    printf("\033[94m▧ \033[0m ");
-    printf(" 　　 ■ ■ ■ ■ 　　 ■ 　 　 ■   ■   ■ 　 ■  　 ■ 　 　 ■ ■ ■ 　 ■ ■ ■ ■       　\033[94m▧ \n");
-    printf("\033[94m▧  \033[0m ");  
-    printf(" 　  ■ 　　　　　 ■ 　 　 ■    ■  ■  　■  　 ■ 　 　 　　■    ■ 　  ■         \033[94m▧ \n");
-    printf("\033[94m▧ \033[0m ");
-    printf(" 　   ■ 　 　 　 ■ ■ ■ 　　■ 　  ■ ■　　■ ■ ■ 　 　 ■ ■ ■ ■ 　 ■ ■ ■ ■         \033[94m▧ \n");
-    printf("\033[94m▧                                                                                 ▧ \n");
-    printf("\033[94m▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ \n");// 테투리 색상
-
-    printf("\033[0m");
-    printf("\n");
-    printf("\n");
-    printf("\n");
-    printf("　　　　　　　　　　　　　 　 Find the Same Picture\n");
-    printf("　　　　　　　　　　　　　 　-----------------------\n");
-    printf("　　　　　　　　　　　　　 　 　　   M e n u\n");
-    printf("　　　　　　　　　　　　 　  -----------------------\n");
-    printf("　　　　　　　　　　　　　　   1.   Game Start\n");
-    printf("　　　　　　　　　　　　　   　2.   Card Check\n");
-    printf("　　　　　　　　　　　　　　   3.   Credit\n");
-    printf("　　　　　　　　　　　　　　   4.   End\n");
-
-    scanf("%d", &menu);
-    return menu;
+    switch (menu)
+    {
+    case 1:
+        game = GAME_START;
+        reset();
+        display_snake();
+        menu = game_start();
+        break;
+    case 2:
+        printf("Record\n");
+        break;
+    case 3:
+        printf("Quit\n");
+        break;
+        return 0;
+    }
 }
 
-int main() {
-    srand(time(NULL));
-    int choice;
+int game_start()
+{
+    // signal 설정
+    static struct itimerval timer;
+    signal(SIGVTALRM, (void (*)(int))update);
+    timer.it_value.tv_sec = 0;
+    timer.it_value.tv_usec = 16667;
+    timer.it_interval.tv_sec = 0;
+    timer.it_interval.tv_usec = 16667;
+    setitimer(ITIMER_VIRTUAL, &timer, NULL);
 
-    while (1) {
-        choice = display_menu();
-
-        switch(choice) {
-            case 1:
-                play_game();
-                break;
-            case 2:
-                display_images();
-                break;
-            case 3:
-                display_credits();
-                break;
-            case 4:
-                printf("\033[2J\033[H");
-                printf("게임을 종료합니다.\n");
-                exit(0);
-            default:
-                printf("잘못된 선택입니다.\n");
-                sleep(1);
+    while (1)
+    {
+        if (game == GAME_END)
+        {
+            signal(SIGVTALRM, SIG_IGN);
+            // save_result(point);
+            reset();
+            return 1;
         }
     }
+    game = GAME_END;
+}
 
-    return 0;
+void reset(void)
+{
+    point = 0;
+    x = WIDTH / 2;
+    y = HEIGHT / 2;
+    snakeX[0] = x;
+    snakeY[0] = y;
+    entireTail = 0;
+    space();
 }
