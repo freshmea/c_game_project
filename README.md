@@ -1,13 +1,13 @@
-# HM2J_c
+# KIB_c_game_project_snake
 
-이 프로젝트는 고려대 IoT 빅데이터 프로그래머 양성과정에서 진행한 프로젝트로 김진호, 강민우, 정현우, 김진성이 속한 팀에서 진행한 프로젝트입니다.
+이 프로젝트는 고려대 IoT 빅데이터 프로그래머 양성과정에서 진행한 프로젝트로 민병근, 조보근, 김진세, 신지환이 속한 팀에서 진행한 프로젝트입니다.
 구현된 파일을 헤더파일과 변수및 함수의 이름과 위치를 정리해서 만들었습니다.
 C언어를 공부하는 분들에게 도움이 되었으면 좋겠습니다.
-C + MySQL 을 이용해서 구현한 테트리스 게임입니다.
+C를 이용해서 구현한 뱀 게임입니다.
 
 ## Table of Contents (목차)
 
-- [HM2J\_c](#hm2j_c)
+- [KIB\_c\_game\_project\_snake](#kib_c_game_project_snake)
   - [Table of Contents (목차)](#table-of-contents-목차)
   - [Requirements](#requirements)
 
@@ -35,11 +35,4 @@ C + MySQL 을 이용해서 구현한 테트리스 게임입니다.
   ```bash
   sudo apt install cmake
   brew install cmake
-  ```
-
-- [MySQL](https://www.mysql.com/) >= 8.3.0
-  To manage data by Database
-  ```bash
-  sudo apt install mysql-server
-  sudo mysql
   ```

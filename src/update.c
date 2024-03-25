@@ -1,324 +1,189 @@
-#include "update.h"
+/**
+ *@file update.c
+* @brief rand와 srand,time함수,출력함수,signal함수를 사용하기 위한 헤더파일들을 출력했습니다.
+* GAME START, GAME END을 정의하고 미끼의 생성,처음 생성된 미끼의
+* 길이와 높이를 정의했습니다. 또한 게임 플레이 시간을 계산하는 count변수와 미끼의 위치 미끼를
+  섭취했을때의 꼬리의 변화를 정의하고(bait,snakeX,Y) 필드의 크기와 게임 포인트 꼬리의 크기변수
+  를 가져와서(extern) 활용하였습니다.
+*/
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <signal.h>
 
-int update(int signum)
+#define GAME_START 0
+#define GAME_END 1
+#define width 40
+#define height 40
+
+int count;
+extern int x;
+extern int y;
+extern int game;
+extern int point;
+extern entireTail;
+
+int baitX;
+int baitY;
+int snakeX[100];
+int snakeY[100];
+
+void space()
 {
-    static int downcount = 0;
-    static int setcount = 0;
-    static long speedcount = 0;
-    static int countrange = 5;
-    static int firststart = 0;
+    srand(time(NULL));
 
-    char ch;
+    baitX = rand() % height - 1;
+    baitY = rand() % width - 1;
 
-    srand((unsigned)time(NULL));
-
-    if (firststart == 0)
+    if (baitX == 0 || baitX == height)
     {
-        block_number = rand() % 7;
-        if (firststart == 0)
-            firststart++;
+        baitX = rand() % height - 1;
+    }
+    else if (baitY == 0 || baitY == width)
+    {
+        baitY = rand() % width - 1;
     }
 
-    display_tetris();
-    check_one_line();
-
-    if (downcount == countrange - 1)
+    if (x == baitX && y == baitY)
     {
-        point += 1;
-        move_block(DOWN);
+        baitX = rand() % height - 1;
+        baitY = rand() % width - 1;
     }
-
-    if (speedcount == 499)
-    {
-        if (countrange != 1)
-            countrange--;
-    }
-
-    downcount++;
-    downcount %= countrange;
-    speedcount++;
-    speedcount %= 500;
-
-    if (x == 3 && y == 0)
-    {
-        if (collision_test(LEFT) || collision_test(RIGHT) || collision_test(DOWN) || collision_test(ROTATE))
-        {
-            printf("\n Game End! \n");
-            downcount = 0;
-            setcount = 0;
-            speedcount = 0;
-            countrange = 5;
-            firststart = 0;
-            game = GAME_END;
-        }
-    }
-
-    if (collision_test(DOWN))
-    {
-        if (setcount == 9)
-        {
-            block_number = next_block_number;
-            next_block_number = rand() % 7;
-            block_state = 0;
-            x = 3;
-            y = 0;
-        }
-        setcount++;
-        setcount %= 10;
-    }
-
-    ch = getch();
-
-    switch (ch)
-    {
-    case 74:
-    case 106:
-        move_block(LEFT);
-        break;
-    case 76:
-    case 108:
-        move_block(RIGHT);
-        break;
-    case 75:
-    case 107:
-        move_block(DOWN);
-        break;
-    case 73:
-    case 105:
-        move_block(ROTATE);
-        break;
-    case 65:
-    case 97:
-        drop();
-        break;
-    case 80:
-    case 112:
-        downcount = 0;
-        setcount = 0;
-        speedcount = 0;
-        countrange = 5;
-        firststart = 0;
-        game = GAME_END;
-        break;
-    default:
-        break;
-    }
-    return 0;
 }
-
-int move_block(int command)
+/**
+ * @example typedef함수를 사용하여 STOP LEFT RIGHT UP DOWN이란 단어의 데이터타입을
+ * 정의하고 sdir(snake direction)구조체 집합 구성요소로 정의하였습니다.
+ */
+typedef enum
 {
-    int i, j;
+    STOP = 0,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+} sdir;
+/**
+ * @brief move_snake함수를 정의하였습니다. 위에 정한 구조체 sdir을 변수로 정하고
+ * 새로 정의한 newx,newy변수를 활용하여 switch case문으로 플레이어가 조종하는 뱀의
+ * 움직임을 정의하였습니다.
+ */
+int move_snake(int sdir)
+{
     int newx, newy;
-    int oldx, oldy;
-    int old_block_state;
-    int(*block_pointer)[4][4][4] = NULL;
 
     newx = x;
     newy = y;
 
-    old_block_state = block_state;
-
-    if (collision_test(command) == 0)
+    switch (sdir)
     {
-        switch (command)
-        {
-        case LEFT:
-            newx--;
-            break;
-        case RIGHT:
-            newx++;
-            break;
-        case DOWN:
-            newy++;
-            break;
-        case ROTATE:
-            block_state++;
-            block_state %= 4;
-            break;
-        }
-    }
-    else
-    {
-        return 1;
-    }
-
-    switch (block_number)
-    {
-    case 0:
-        block_pointer = &i_block;
+    case LEFT:
+        newy--;
         break;
-    case 1:
-        block_pointer = &t_block;
+    case RIGHT:
+        newy++;
         break;
-    case 2:
-        block_pointer = &s_block;
+    case DOWN:
+        newx++;
         break;
-    case 3:
-        block_pointer = &z_block;
+    case UP:
+        newx--;
         break;
-    case 4:
-        block_pointer = &l_block;
-        break;
-    case 5:
-        block_pointer = &j_block;
-        break;
-    case 6:
-        block_pointer = &o_block;
-        break;
-    }
-
-    for (i = 0, oldy = y; i < 4; i++, oldy++)
-    {
-        for (j = 0, oldx = x; j < 4; j++, oldx++)
-        {
-            if (oldx > 0 && oldx < 9 && oldy < 20 && oldy > 0)
-                if ((*block_pointer)[old_block_state][i][j] != 0)
-                    tetris_table[oldy][oldx] = 0;
-        }
     }
 
     x = newx;
     y = newy;
 
-    for (i = 0, newy = y; i < 4; i++, newy++)
-    {
-        for (j = 0, newx = x; j < 4; j++, newx++)
-        {
-            if (newx > 0 && newx < 9 && newy < 20 && newy > 0)
-                if ((*block_pointer)[block_state][i][j] != 0)
-                    tetris_table[newy][newx] = (*block_pointer)[block_state][i][j];
-        }
-    }
-
     return 0;
 }
-
-int collision_test(int command)
+/**
+ * @brief collision함수는 먹이를 플레이어가 조종하는 뱀이 먹었을때
+ * 포인트를 얻고 꼬리의 길이를 업데이트하고 새로운 먹이를 랜덤한 위치에
+ * 스폰할수 있도록 정의했습니다.
+ */
+// bait & snake
+void collison()
 {
-    int i, j;
-    int tempx, tempy;
-    int oldx, oldy;
-    int temp_block_state;
-    int(*block_pointer)[4][4][4];
-    int temp_tetris_table[21][10];
-
-    oldx = tempx = x;
-    oldy = tempy = y;
-    temp_block_state = block_state;
-
-    switch (command)
+    if (x == baitX && y == baitY)
     {
-    case LEFT:
-        tempx--;
-        break;
-    case RIGHT:
-        tempx++;
-        break;
-    case DOWN:
-        tempy++;
-        break;
-    case ROTATE:
-        temp_block_state++;
-        temp_block_state %= 4;
-        break;
+        ++point;
+        ++entireTail;
+        space();
     }
-
-    switch (block_number)
-    {
-    case 0:
-        block_pointer = &i_block;
-        break;
-    case 1:
-        block_pointer = &t_block;
-        break;
-    case 2:
-        block_pointer = &s_block;
-        break;
-    case 3:
-        block_pointer = &z_block;
-        break;
-    case 4:
-        block_pointer = &l_block;
-        break;
-    case 5:
-        block_pointer = &j_block;
-        break;
-    case 6:
-        block_pointer = &o_block;
-        break;
-    }
-
-    for (i = 0; i < 21; i++)
-    {
-        for (j = 0; j < 10; j++)
-        {
-            temp_tetris_table[i][j] = tetris_table[i][j];
-        }
-    }
-
-    for (i = 0, oldy = y; i < 4; i++, oldy++)
-    {
-        for (j = 0, oldx = x; j < 4; j++, oldx++)
-        {
-            if (oldx > 0 && oldx < 9 && oldy < 20 && oldy > 0)
-            {
-                if ((*block_pointer)[block_state][i][j] != 0)
-                    temp_tetris_table[oldy][oldx] = 0;
-            }
-        }
-    }
-
-    for (i = 0; i < 4; i++)
-    {
-        for (j = 0; j < 4; j++)
-        {
-
-            if (temp_tetris_table[tempy + i][tempx + j] != 0 && (*block_pointer)[temp_block_state][i][j] != 0)
-                return 1;
-        }
-    }
-
-    return 0;
 }
 
-int drop(void)
+int update(int signum)
 {
-    while (!collision_test(DOWN))
-        move_block(DOWN);
-
-    return 0;
-}
-
-int check_one_line(void)
-{
-    int i, j;
-    int ti, tj;
-    int line_hole;
-
-    for (i = 19; i > 0; i--)
+    int ch;
+    ch = getch();
+    switch (ch)
     {
-        line_hole = 0;
-        for (j = 1; j < 9; j++)
-        {
-            if (tetris_table[i][j] == 0)
-            {
-                line_hole = 1;
-            }
-        }
-
-        if (line_hole == 0)
-        {
-            point += 1000;
-            for (ti = i; ti > 0; ti--)
-            {
-                for (tj = 0; tj < 9; tj++)
-                {
-                    tetris_table[ti][tj] = tetris_table[ti - 1][tj];
-                }
-            }
-        }
+    case 'i':
+        move_snake(UP);
+        break;
+    case 'j':
+        move_snake(LEFT);
+        break;
+    case 'k':
+        move_snake(DOWN);
+        break;
+    case 'l':
+        move_snake(RIGHT);
+        break;
+    case 's':
+        game = GAME_END;
+        break;
     }
 
+    ++count;
+    display_snake();
+    collison();
+    /*
+         gameover if snake touch it's own body
+    for (int i = 1; i < entireTail; ++i)
+    {
+        if(snakeX[0]==snakeX[i] && snakeY[0]==snakeY[i])
+         game = GAME_END;
+    }
+    */
+
+    // gameover if snake touch wall
+    if (x == 0)
+    {
+        game = GAME_END;
+    }
+    if (y == 0)
+    {
+        game = GAME_END;
+    }
+    if (x == width - 1)
+    {
+        game = GAME_END;
+    }
+    if (y == height - 1)
+    {
+        game = GAME_END;
+    }
+
+    /**
+     * @brief 뱀이 먹이를 섭취하였을경우에 생기는 꼬리의 변화를 임의의 변수
+     * (temp)로 정의하고 배열을 활용하여 꼬리가 길어지는 상황을 조건문을 활
+     * 용하여 정의했습니다.
+     */
+    // snake tail logic
+    int tempX = snakeX[0];
+    int tempY = snakeY[0];
+    int tempX2, tempY2;
+    snakeX[0] = x;
+    snakeY[0] = y;
+    for (int i = 1; i < entireTail; i++)
+    {
+        tempX2 = snakeX[i];
+        tempY2 = snakeY[i];
+        snakeX[i] = tempX;
+        snakeY[i] = tempY;
+        tempX = tempX2;
+        tempY = tempY2;
+    }
     return 0;
 }
