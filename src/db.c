@@ -11,6 +11,7 @@ int print_result(MYSQL *conn)
         return ERR;
     }
     system("clear");
+    int noData = 1;
     while ((row = mysql_fetch_row(res)) != NULL)
     {
         printf("********************************\n");
@@ -18,6 +19,13 @@ int print_result(MYSQL *conn)
         printf("Point: %s\n", row[2]);
         printf("time: %s-%s-%s %s:%s\n", row[3], row[4], row[5], row[6], row[7]);
         printf("********************************\n\n");
+        noData = 0;
+    }
+    if (noData)
+    {
+        printf("********************************\n");
+        printf("No History\n");
+        printf("********************************\n");
     }
 
     return OK;
@@ -184,15 +192,7 @@ void read_db()
     //     printf("No History");
     //     printf("********************************\n");
     // }
-    // else
-    // {
-    //     system("clear");
-    //     printf("********************************\n");
-    //     printf("%s\n", res->name);
-    //     printf("%d\n", res->point);
-    //     printf("time: %d-%d-%d %d:%d\n", res->year, res->month, res->day, res->hour, res->min);
-    //     printf("********************************\n");
-    // }
+
     close_db();
 }
 
