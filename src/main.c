@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <unistd.h> // sleep
 #include "game.h"
 
 int display_menu()
@@ -51,7 +47,6 @@ int main()
     while (1)
     {
         choice = display_menu();
-
         switch (choice)
         {
         case 1:
@@ -71,6 +66,7 @@ int main()
             printf("잘못된 선택입니다.\n");
             sleep(1);
         }
+        printf("display_menu호출");
     }
 
     return 0;

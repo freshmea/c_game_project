@@ -62,18 +62,6 @@ char images[MAX_IMAGES][IMG_HEIGHT][IMG_WIDTH + 1] = {
      "|  '---`         |",
      "|----------------|"}};
 
-void shuffleCards(int *array, int size)
-{
-    for (int i = 0; i < size; i++)
-    {
-        int j = rand() % size;
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
-
-// 카드를 쌍으로 배치하기 위한 초기화 로직
 void initializeBoard()
 {
     int placements[BOARD_AREA] = {0};
@@ -92,7 +80,17 @@ void initializeBoard()
     }
 }
 
-// 게임 보드 출력 로직
+void shuffleCards(int *array, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        int j = rand() % size;
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
 void printBoard(int cursorPosition)
 {
     printf("Match Score: %d\n", score);
@@ -113,6 +111,11 @@ void printBoard(int cursorPosition)
                 int cardIndex = i * BOARD_SIZE + j;
                 if (revealedCards[cardIndex])
                 { // 카드가 공개된 경우
+                    if (cardIndex == cursorPosition && k == 0)
+                    { // 커서 위치의 첫 번째 라인에만 선택 표시
+                        printf("|-----커서위치----");
+                        continue;
+                    }
                     // 실제 이미지 데이터가 있다면 여기서 이미지 라인을 출력합니다.
                     // 예제에서는 간단한 텍스트로 대체합니다.
                     for (int m = 0; m < IMG_WIDTH + 1; m++)
@@ -141,7 +144,6 @@ void printBoard(int cursorPosition)
     }
 }
 
-// 입력 처리 로직
 void processInput(int *cursorPosition, int *selectedCards, int *selectedCount)
 {
     char c = getchar();
@@ -173,7 +175,6 @@ void processInput(int *cursorPosition, int *selectedCards, int *selectedCount)
     }
 }
 
-// 일치 검사 로직
 void checkMatch(int *selectedCards, int *selectedCount)
 {
     if (*selectedCount == 2)

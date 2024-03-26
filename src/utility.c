@@ -21,7 +21,7 @@ void enableRawMode()
 // 크레딧 출력 로직
 void display_credits()
 {
-    printf("\033[2J\033[H"); // Clear screen
+    system("clear");
 
     printf("\n");
     printf("　　　　　　　　        Sola HONG　Data Manager\n");
@@ -66,16 +66,22 @@ void display_credits()
 // 이미지 출력 로직
 void display_images()
 {
-    printf("\033[2J\033[H"); // 화면 지우기 클리어 함수와 같음
+    system("clear");
 
-    for (int img = 0; img < MAX_IMAGES / 2; ++img)
+    for (int img = 0; img < MAX_IMAGES / 8; ++img)
     { // 각 이미지에 대해 반복
         for (int row = 0; row < IMG_HEIGHT; ++row)
         { // 각 이미지의 모든 행에 대해 반복
-            // 이미지의 현재 행을 출력
-            printf("%s\n", images[img][row]);
+            for (int i = 0; i < 4; i++)
+            {
+                // 이미지의 현재 행을 출력
+                printf("%s  |  ", images[img + i][row]);
+            }
+            printf("\n"); // 이미지 간 구분을 위해 빈 줄 추가
         }
         printf("\n"); // 이미지 간 구분을 위해 빈 줄 추가
     }
-    sleep(30); // 이미지를 잠시 표시한 후 메인 메뉴로 복귀
+    printf("메뉴로 이동합니다..아무키나 누르세요.\n");
+    while (getch() == -1)
+        ;
 }
