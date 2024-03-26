@@ -24,9 +24,9 @@ static struct result
 } temp_result;
 
 // 내부 함수 선언
-int print_result(void);     /* 메뉴에서 기록출력시 호출되어 기록을 출력하는 함수*/
-int search_result(void);    /*메뉴에서 기록검색시 호출되어 기러고을 검색하는 함수*/
 int save_result(long, int); /*게임종료시 호출되어 기록을 저장하는 함수*/
+int search_result(void);    /*메뉴에서 기록검색시 호출되어 기러고을 검색하는 함수*/
+int print_result(void);     /* 메뉴에서 기록출력시 호출되어 기록을 출력하는 함수*/
 
 // 외부 함수 선언
 // getch.c

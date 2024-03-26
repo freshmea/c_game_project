@@ -4,16 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-enum BlockType
-{
-    I_BLOCK,
-    T_BLOCK,
-    S_BLOCK,
-    Z_BLOCK,
-    L_BLOCK,
-    J_BLOCK,
-    O_BLOCK
-};
+#include "update.h"
 
 // 내부 함수 선언
 int display_tetris_table(int *);
