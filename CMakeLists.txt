@@ -3,8 +3,9 @@ project(findPicture)
 
 file(GLOB SRC_FILES "src/*.c")
 
+find_library(MYSQL mysqlclient)
 add_executable(findPicture ${SRC_FILES})
-target_include_directories(findPicture PUBLIC include)
+target_include_directories(findPicture PUBLIC include /usr/include/mysql)
 target_link_libraries(findPicture ${MYSQL} )
 
 

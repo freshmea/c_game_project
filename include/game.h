@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <time.h>
 #include "utility.h"
+#include "db.h"
 
 /**
  * @brief 카드를 쌍으로 배치하기 위한 초기화 로직 보드 전체 길이의 1/2 만큼의 카드쌍을 생성
@@ -43,5 +44,7 @@ void checkMatch(int *selectedCards, int *selectedCount);
  * @brief 게임을 실행하는 함수
  */
 void play_game();
+
+int getch();
 
 #endif

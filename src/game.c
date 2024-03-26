@@ -218,4 +218,8 @@ void play_game()
 
     disableRawMode();
     printf("Congratulations! You've completed the game with a score of %d.\n", score);
+    write_db(score);
+    printf("아무키나 누루세요...");
+    while (getch() == -1)
+        ;
 }

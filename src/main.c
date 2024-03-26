@@ -32,8 +32,10 @@ int display_menu()
     printf("　　　　　　　　　　　　 　  -----------------------\n");
     printf("　　　　　　　　　　　　　　   1.   Game Start\n");
     printf("　　　　　　　　　　　　　   　2.   Card Check\n");
-    printf("　　　　　　　　　　　　　　   3.   Credit\n");
-    printf("　　　　　　　　　　　　　　   4.   End\n");
+    printf("　　　　　　　　　　　　　   　3.   Search Record\n");
+    printf("　　　　　　　　　　　　　   　4.   show all Record\n");
+    printf("　　　　　　　　　　　　　　   5.   Credit\n");
+    printf("　　　　　　　　　　　　　　   6.   End\n");
 
     scanf("%d", &menu);
     return menu;
@@ -56,17 +58,24 @@ int main()
             display_images();
             break;
         case 3:
-            display_credits();
+            read_db();
             break;
         case 4:
-            printf("\033[2J\033[H");
+            show_all_db();
+            break;
+        case 5:
+            display_credits();
+            break;
+        case 6:
+            system("clear");
             printf("게임을 종료합니다.\n");
             exit(0);
         default:
             printf("잘못된 선택입니다.\n");
             sleep(1);
         }
-        printf("display_menu호출");
+        while (getch() == -1)
+            ;
     }
 
     return 0;
