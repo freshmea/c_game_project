@@ -32,8 +32,9 @@ int display_menu()
     printf("\t\tGAME MENU\n");
     printf("------------------------------------------------------\n");
     printf("\t\t1. Game Start\n");
-    printf("\t\t2. Record\n");
-    printf("\t\t3. Quit\n");
+    printf("\t\t2. find Record\n");
+    printf("\t\t3. show all Record\n");
+    printf("\t\t4. Quit\n");
     printf("------------------------------------------------------\n");
 
     printf("Press any key to start...\n");

@@ -4,6 +4,9 @@ void display_snake()
 {
     system("clear");
     // ceiling print
+    printf("********************************\n");
+    printf("Snake Game || POINT: %d\n", point);
+    printf("********************************\n");
     for (int i = 0; i < HEIGHT; ++i)
     {
         for (int j = 0; j < WIDTH; ++j)

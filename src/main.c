@@ -15,8 +15,13 @@ int main(void)
         break;
     case 2:
         printf("Record\n");
+        read_db();
         break;
     case 3:
+        printf("Record\n");
+        show_all_db();
+        break;
+    case 4:
         printf("Quit\n");
         break;
         return 0;
@@ -39,7 +44,7 @@ int game_start()
         if (game == GAME_END)
         {
             signal(SIGVTALRM, SIG_IGN);
-            // save_result(point);
+            write_db(point);
             reset();
             return 1;
         }
