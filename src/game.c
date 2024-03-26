@@ -1,13 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
 #include "game.h"
 
 int board[BOARD_AREA] = {0};
 int revealedCards[BOARD_AREA] = {0};
 int score = 0;
-
 // ASCII 아트 이미지 배열
 char images[MAX_IMAGES][IMG_HEIGHT][IMG_WIDTH + 1] = {
     {"|----------------|",
@@ -117,7 +112,7 @@ void printBoard(int cursorPosition)
             {
                 int cardIndex = i * BOARD_SIZE + j;
                 if (revealedCards[cardIndex])
-                {   // 카드가 공개된 경우
+                { // 카드가 공개된 경우
                     // 실제 이미지 데이터가 있다면 여기서 이미지 라인을 출력합니다.
                     // 예제에서는 간단한 텍스트로 대체합니다.
                     for (int m = 0; m < IMG_WIDTH + 1; m++)

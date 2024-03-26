@@ -1,17 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <termios.h>
 #include "utility.h"
-#include "game.h"
 
 struct termios orig_termios;
 
-void disableRawMode() {
+void disableRawMode()
+{
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
 
-void enableRawMode() {
+void enableRawMode()
+{
     tcgetattr(STDIN_FILENO, &orig_termios);
     atexit(disableRawMode);
 
@@ -21,11 +18,11 @@ void enableRawMode() {
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
-//크레딧 출력 로직
-void display_credits() {
+// 크레딧 출력 로직
+void display_credits()
+{
     printf("\033[2J\033[H"); // Clear screen
-    
-  
+
     printf("\n");
     printf("　　　　　　　　        Sola HONG　Data Manager\n");
     sleep(1);
@@ -62,17 +59,19 @@ void display_credits() {
     printf("　            　★　*　　　　　°　　　　🛰 　°·　　   🪐\n");
     printf("                           .　　☄ 　•　° ★　 •\n");
     printf("                             ▁▂▃▄▅▆▇▇▆▅▄▃▁▂\n");
-    
+
     sleep(600);
 }
 
-
-//이미지 출력 로직
-void display_images() {
+// 이미지 출력 로직
+void display_images()
+{
     printf("\033[2J\033[H"); // 화면 지우기 클리어 함수와 같음
 
-    for (int img = 0; img < MAX_IMAGES / 2; ++img) { // 각 이미지에 대해 반복
-        for (int row = 0; row < IMG_HEIGHT; ++row) { // 각 이미지의 모든 행에 대해 반복
+    for (int img = 0; img < MAX_IMAGES / 2; ++img)
+    { // 각 이미지에 대해 반복
+        for (int row = 0; row < IMG_HEIGHT; ++row)
+        { // 각 이미지의 모든 행에 대해 반복
             // 이미지의 현재 행을 출력
             printf("%s\n", images[img][row]);
         }

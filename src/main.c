@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <unistd.h> // sleep
 #include "game.h"
-#include "utility.h"
 
-int display_menu() {
+int display_menu()
+{
     int menu;
 
     system("clear");
-    
+
     printf("\n");
     printf("\033[94m▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ \n");
     printf("\033[94m▧                                                                                 ▧\n");
@@ -17,12 +19,12 @@ int display_menu() {
     printf("　　 　■ 　　　　　 ■ 　 　 ■  ■    ■ 　 ■ 　  ■ 　 　 　　■    ■　　  　       \033[94m▧ \n");
     printf("\033[94m▧ \033[0m ");
     printf(" 　　 ■ ■ ■ ■ 　　 ■ 　 　 ■   ■   ■ 　 ■  　 ■ 　 　 ■ ■ ■ 　 ■ ■ ■ ■       　\033[94m▧ \n");
-    printf("\033[94m▧  \033[0m ");  
+    printf("\033[94m▧  \033[0m ");
     printf(" 　  ■ 　　　　　 ■ 　 　 ■    ■  ■  　■  　 ■ 　 　 　　■    ■ 　  ■         \033[94m▧ \n");
     printf("\033[94m▧ \033[0m ");
     printf(" 　   ■ 　 　 　 ■ ■ ■ 　　■ 　  ■ ■　　■ ■ ■ 　 　 ■ ■ ■ ■ 　 ■ ■ ■ ■         \033[94m▧ \n");
     printf("\033[94m▧                                                                                 ▧ \n");
-    printf("\033[94m▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ \n");// 테투리 색상
+    printf("\033[94m▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ ▧ \n"); // 테투리 색상
 
     printf("\033[0m");
     printf("\n");
@@ -41,30 +43,33 @@ int display_menu() {
     return menu;
 }
 
-int main() {
+int main()
+{
     srand(time(NULL));
     int choice;
 
-    while (1) {
+    while (1)
+    {
         choice = display_menu();
 
-        switch(choice) {
-            case 1:
-                play_game();
-                break;
-            case 2:
-                display_images();
-                break;
-            case 3:
-                display_credits();
-                break;
-            case 4:
-                printf("\033[2J\033[H");
-                printf("게임을 종료합니다.\n");
-                exit(0);
-            default:
-                printf("잘못된 선택입니다.\n");
-                sleep(1);
+        switch (choice)
+        {
+        case 1:
+            play_game();
+            break;
+        case 2:
+            display_images();
+            break;
+        case 3:
+            display_credits();
+            break;
+        case 4:
+            printf("\033[2J\033[H");
+            printf("게임을 종료합니다.\n");
+            exit(0);
+        default:
+            printf("잘못된 선택입니다.\n");
+            sleep(1);
         }
     }
 
