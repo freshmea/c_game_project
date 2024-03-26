@@ -28,13 +28,13 @@ static const char *passwd = "0000";
 // 게임 데이터 저장에 사용할 구조체 선언
 typedef struct
 {
-  char name[30];
-  int point;
-  int year;
-  int month;
-  int day;
-  int hour;
-  int min;
+    char name[30];
+    int point;
+    int year;
+    int month;
+    int day;
+    int hour;
+    int min;
 } RESULT;
 
 static RESULT tmp;
@@ -101,5 +101,10 @@ void read_db();
  * @param point 점수, 아이디
  */
 void write_db(int point);
+
+/**
+ * @brief MySQL DB에 저장된 모든 데이터를 출력합니다
+ */
+void show_all_db();
 
 #endif // DB_H

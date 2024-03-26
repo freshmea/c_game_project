@@ -18,13 +18,11 @@ int main()
         break;
     case 2:
         printf("전적 검색\n");
-        init_db();
         read_db();
-        close_db();
         break;
     case 3:
         printf("Record Output\n");
-        // print_result();
+        show_all_db();
         break;
     case 4:
         printf("Quit\n");
