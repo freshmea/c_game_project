@@ -21,6 +21,7 @@
 #define CYAN_COLOR "\x1b[36m"
 #define WHITE_COLOR "\x1b[37m"
 
+// 외부 전역 변수 update.c 에서 선언
 extern int i_block[4][4][4];
 extern int t_block[4][4][4];
 extern int s_block[4][4][4];
@@ -29,8 +30,8 @@ extern int l_block[4][4][4];
 extern int j_block[4][4][4];
 extern int o_block[4][4][4];
 extern int next_block_number;
-extern int tetris_table[21][10];
 extern int block_state;
+extern int tetris_table[21][10];
 
 /**
  * @brief update 함수에서 호출되는 게임 정보를 출력하는 함수

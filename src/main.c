@@ -1,5 +1,10 @@
 #include "main.h"
 
+int game;
+int x = 3;
+int y = 0;
+int point = 0;
+
 int main()
 {
     int menu;

@@ -29,10 +29,8 @@ int init_tetris_table(void);
  */
 int update(int signum);
 int game_start(void);
-int game;
-int x = 3;
-int y = 0;
-int point = 0;
-int tetris_table[21][10];
+
+// 외부 전역 변수 update.c 에서 선언
+extern int tetris_table[21][10];
 
 #endif // MAIN_H

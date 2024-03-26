@@ -86,7 +86,7 @@ void display_tetris()
         {
             if (j == 0 || j == 9)
             {
-                printf("〓 ");
+                printf("〓");
             }
             else if (i == 20 && (j > 0 && j < 9))
             {
